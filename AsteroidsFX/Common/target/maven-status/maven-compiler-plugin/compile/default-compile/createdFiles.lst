@@ -1,0 +1,5 @@
+dk/sdu/common/GameKeys.class
+dk/sdu/common/GameData.class
+module-info.class
+dk/sdu/common/Entity.class
+dk/sdu/common/World.class
