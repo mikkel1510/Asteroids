@@ -5,6 +5,7 @@ import dk.sdu.common.Entity;
 import dk.sdu.common.GameData;
 import dk.sdu.common.GameKeys;
 import dk.sdu.common.World;
+import dk.sdu.enemysystem.Enemy;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -77,6 +78,8 @@ public class Main extends Application {
 
         Player player = new Player();
         player.start(gameData, world);
+        Enemy enemy = new Enemy();
+        enemy.start(gameData, world);
         for (Entity entity : world.getEntities()){
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);
