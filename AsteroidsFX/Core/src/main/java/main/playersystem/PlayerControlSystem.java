@@ -1,13 +1,16 @@
 package main.playersystem;
 
-import main.bulletsystem.Bullet;
 import main.bulletsystem.BulletSPI;
 import main.common.Data.Entity;
 import main.common.Data.GameData;
 import main.common.Data.GameKeys;
 import main.common.Data.World;
-import main.common.SPILocator;
 import main.common.Services.IEntityProcessor;
+
+import java.util.Collection;
+import java.util.ServiceLoader;
+
+import static java.util.stream.Collectors.toList;
 
 public class PlayerControlSystem implements IEntityProcessor {
     @Override
@@ -26,10 +29,14 @@ public class PlayerControlSystem implements IEntityProcessor {
                 player.setY(player.getY() + changeY);
             }
             if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                for (BulletSPI bullet : SPILocator.locateAll(BulletSPI.class)){
-                    world.addEntity(bullet.createBullet(player, gameData));
-                }
+                getBulletSPIs().stream().findFirst().ifPresent(
+                        spi -> world.addEntity(spi.createBullet(player, gameData))
+                );
             }
         }
+    }
+
+    private Collection<? extends BulletSPI> getBulletSPIs(){
+        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

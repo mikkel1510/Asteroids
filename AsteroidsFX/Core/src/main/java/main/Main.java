@@ -1,16 +1,12 @@
 package main;
 
-import main.asteroidsystem.Asteroid;
-import main.bulletsystem.Bullet;
 import main.common.Data.Entity;
 import main.common.Data.GameData;
 import main.common.Data.GameKeys;
 import main.common.Data.World;
-import main.common.SPILocator;
 import main.common.Services.IEntityProcessor;
 import main.common.Services.IGamePluginService;
 import main.common.Services.IPostProcessor;
-import main.enemysystem.Enemy;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -20,10 +16,8 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
-import main.playersystem.Player;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
@@ -91,6 +85,7 @@ public class Main extends Application {
         }
 
         for (Entity entity : world.getEntities()){
+            System.out.println(entity.getID());
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
@@ -138,11 +133,6 @@ public class Main extends Application {
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);
             }
-            if (entity instanceof Bullet) {
-                if (entity.getX() > 800 | entity.getX() < 0 | entity.getY() > 800 | entity.getY() < 0) {
-                    world.getEntities().remove(entity);
-                }
-            }
             polygon.setTranslateX(entity.getX());
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
@@ -151,15 +141,15 @@ public class Main extends Application {
     }
 
 
-    private Collection<? extends IGamePluginService> getPluginServices(){
-        return SPILocator.locateAll(IGamePluginService.class);
+    private Collection<? extends IGamePluginService> getPluginServices(){;
+        return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     private Collection<? extends IEntityProcessor> getEntityProcessor(){
-        return SPILocator.locateAll(IEntityProcessor.class);
+        return ServiceLoader.load(IEntityProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     private Collection<? extends IPostProcessor> getPostProcessor(){
-        return SPILocator.locateAll(IPostProcessor.class);
+        return ServiceLoader.load(IPostProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

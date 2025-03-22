@@ -1,15 +1,17 @@
 package main.enemysystem;
 
-import main.bulletsystem.Bullet;
 import main.bulletsystem.BulletSPI;
 import main.common.Data.Entity;
 import main.common.Data.GameData;
 import main.common.Data.World;
-import main.common.SPILocator;
 import main.common.Services.IEntityProcessor;
 import main.playersystem.Player;
 
+import java.util.Collection;
 import java.util.Random;
+import java.util.ServiceLoader;
+
+import static java.util.stream.Collectors.toList;
 
 public class EnemyControlSystem implements IEntityProcessor {
     @Override
@@ -28,9 +30,9 @@ public class EnemyControlSystem implements IEntityProcessor {
 
                 if (Math.abs(rotationDifference) < 5) {
                     if (rnd.nextInt(10) == 2) {
-                        for (BulletSPI bullet : SPILocator.locateAll(BulletSPI.class)){
-                            world.addEntity(bullet.createBullet(enemy, gameData));
-                        }
+                        getBulletSPIs().stream().findFirst().ifPresent(
+                                spi -> world.addEntity(spi.createBullet(enemy, gameData))
+                        );
                     }
                 }
 
@@ -41,5 +43,9 @@ public class EnemyControlSystem implements IEntityProcessor {
 
             }
         }
+    }
+
+    private Collection<? extends BulletSPI> getBulletSPIs(){
+        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
