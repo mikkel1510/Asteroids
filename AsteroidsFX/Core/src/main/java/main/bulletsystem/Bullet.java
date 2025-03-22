@@ -1,9 +1,8 @@
-package dk.sdu.bullet;
+package main.bulletsystem;
 
-import dk.sdu.common.Entity;
-import dk.sdu.common.GameData;
-import dk.sdu.common.World;
-import javafx.scene.paint.Color;
+import main.common.Entity;
+import main.common.GameData;
+import main.common.World;
 
 /**
  * Hello world!

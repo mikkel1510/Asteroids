@@ -1,11 +1,11 @@
 package main;
 
-import dk.sdu.bullet.Bullet;
-import dk.sdu.common.Entity;
-import dk.sdu.common.GameData;
-import dk.sdu.common.GameKeys;
-import dk.sdu.common.World;
-import dk.sdu.enemysystem.Enemy;
+import main.bulletsystem.Bullet;
+import main.common.Entity;
+import main.common.GameData;
+import main.common.GameKeys;
+import main.common.World;
+import main.enemysystem.Enemy;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,7 +15,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
-import playersystem.Player;
+import main.playersystem.Player;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,4 +1,4 @@
-package dk.sdu.common;
+package main.common;
 
 import java.util.UUID;
 

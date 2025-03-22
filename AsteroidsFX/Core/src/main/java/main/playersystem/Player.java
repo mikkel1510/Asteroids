@@ -1,12 +1,13 @@
-package playersystem;
+package main.playersystem;
 
-import dk.sdu.bullet.Bullet;
-import dk.sdu.common.Entity;
-import dk.sdu.common.GameData;
-import dk.sdu.common.GameKeys;
-import dk.sdu.common.World;
 
-public class Player extends Entity{
+import main.bulletsystem.Bullet;
+import main.common.Entity;
+import main.common.GameData;
+import main.common.GameKeys;
+import main.common.World;
+
+public class Player extends Entity {
 
     private Entity player;
 

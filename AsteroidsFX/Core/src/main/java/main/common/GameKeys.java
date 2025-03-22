@@ -1,4 +1,4 @@
-package dk.sdu.common;
+package main.common;
 
 public class GameKeys {
     private static boolean[] keys;

@@ -1,10 +1,10 @@
-package dk.sdu.enemysystem;
+package main.enemysystem;
 
-import dk.sdu.bullet.Bullet;
-import dk.sdu.common.Entity;
-import dk.sdu.common.GameData;
-import dk.sdu.common.World;
-import playersystem.Player;
+import main.bulletsystem.Bullet;
+import main.common.Entity;
+import main.common.GameData;
+import main.common.World;
+import main.playersystem.Player;
 
 import java.util.Random;
 
