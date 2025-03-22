@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import playersystem.Player;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
