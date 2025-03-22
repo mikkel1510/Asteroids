@@ -1,5 +1,6 @@
 package main;
 
+import main.asteroidsystem.Asteroid;
 import main.bulletsystem.Bullet;
 import main.common.Entity;
 import main.common.GameData;
@@ -79,6 +80,8 @@ public class Main extends Application {
         player.start(gameData, world);
         Enemy enemy = new Enemy();
         enemy.start(gameData, world);
+        Asteroid asteroid = new Asteroid();
+        asteroid.start(gameData, world);
         for (Entity entity : world.getEntities()){
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);

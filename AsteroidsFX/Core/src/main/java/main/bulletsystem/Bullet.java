@@ -29,8 +29,8 @@ public class Bullet extends Entity
         for (Entity bullet : world.getEntities(Bullet.class)) {
             double changeX = Math.cos(Math.toRadians(bullet.getRotation()));
             double changeY = Math.sin(Math.toRadians(bullet.getRotation()));
-            bullet.setX(bullet.getX() + changeX * 3);
-            bullet.setY(bullet.getY() + changeY * 3);
+            bullet.setX(bullet.getX() + changeX * 0.5);
+            bullet.setY(bullet.getY() + changeY * 0.5);
         }
     }
 

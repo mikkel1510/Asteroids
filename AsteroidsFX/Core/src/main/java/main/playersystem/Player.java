@@ -11,9 +11,6 @@ public class Player extends Entity {
 
     private Entity player;
 
-    public Player() {
-    }
-
     @Override
     public void start(GameData gameData, World world) {
 
