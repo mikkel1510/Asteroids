@@ -1,0 +1,4 @@
+main.asteroidsystem.AsteroidPlugin
+main.bulletsystem.BulletPlugin
+main.enemysystem.EnemyPlugin
+main.playersystem.PlayerPlugin

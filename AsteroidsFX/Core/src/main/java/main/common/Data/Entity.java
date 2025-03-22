@@ -1,4 +1,4 @@
-package main.common;
+package main.common.Data;
 
 import java.util.UUID;
 
@@ -40,15 +40,6 @@ public class Entity {
     }
 
     private Paint color = Color.WHITE;
-
-    public void process(GameData gameData, World world){
-    }
-
-    public void start(GameData gameData, World world){
-    }
-
-    public void stop(GameData gameData, World world){
-    }
 
     public String getID() {
         return ID.toString();

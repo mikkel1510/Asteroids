@@ -2,10 +2,14 @@ package main;
 
 import main.asteroidsystem.Asteroid;
 import main.bulletsystem.Bullet;
-import main.common.Entity;
-import main.common.GameData;
-import main.common.GameKeys;
-import main.common.World;
+import main.common.Data.Entity;
+import main.common.Data.GameData;
+import main.common.Data.GameKeys;
+import main.common.Data.World;
+import main.common.SPILocator;
+import main.common.Services.IEntityProcessor;
+import main.common.Services.IGamePluginService;
+import main.common.Services.IPostProcessor;
 import main.enemysystem.Enemy;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -18,8 +22,13 @@ import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import main.playersystem.Player;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class Main extends Application {
@@ -77,12 +86,9 @@ public class Main extends Application {
 
         });
 
-        Player player = new Player();
-        player.start(gameData, world);
-        Enemy enemy = new Enemy();
-        enemy.start(gameData, world);
-        Asteroid asteroid = new Asteroid();
-        asteroid.start(gameData, world);
+        for (IGamePluginService iGamePlugin : getPluginServices()){
+            iGamePlugin.start(gameData, world);
+        }
 
         for (Entity entity : world.getEntities()){
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
@@ -108,10 +114,12 @@ public class Main extends Application {
     }
 
     private void update(){
-        for (Entity entity : world.getEntities()){
-            entity.process(gameData,world);
+        for (IEntityProcessor entityProcessor : getEntityProcessor()){
+            entityProcessor.process(gameData, world);
         }
-        detector.process(gameData, world);
+        for (IPostProcessor postProcessor : getPostProcessor()){
+            postProcessor.process(gameData, world);
+        }
     }
 
     private void draw(){
@@ -140,5 +148,18 @@ public class Main extends Application {
             polygon.setRotate(entity.getRotation());
             polygon.setFill(entity.getColor());
         }
+    }
+
+
+    private Collection<? extends IGamePluginService> getPluginServices(){
+        return SPILocator.locateAll(IGamePluginService.class);
+    }
+
+    private Collection<? extends IEntityProcessor> getEntityProcessor(){
+        return SPILocator.locateAll(IEntityProcessor.class);
+    }
+
+    private Collection<? extends IPostProcessor> getPostProcessor(){
+        return SPILocator.locateAll(IPostProcessor.class);
     }
 }

@@ -1,8 +1,8 @@
 package main;
 
-import main.common.Entity;
-import main.common.GameData;
-import main.common.World;
+import main.common.Data.Entity;
+import main.common.Data.GameData;
+import main.common.Data.World;
 
 public class CollisionDetector {
 
