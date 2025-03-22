@@ -28,6 +28,7 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
+    private final CollisionDetector detector = new CollisionDetector();
 
     public static void main(String[] args) {
         launch(args);
@@ -82,6 +83,7 @@ public class Main extends Application {
         enemy.start(gameData, world);
         Asteroid asteroid = new Asteroid();
         asteroid.start(gameData, world);
+
         for (Entity entity : world.getEntities()){
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);
@@ -109,6 +111,7 @@ public class Main extends Application {
         for (Entity entity : world.getEntities()){
             entity.process(gameData,world);
         }
+        detector.process(gameData, world);
     }
 
     private void draw(){
