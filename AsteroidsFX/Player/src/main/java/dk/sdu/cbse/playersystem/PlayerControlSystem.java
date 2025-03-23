@@ -27,6 +27,8 @@ public class PlayerControlSystem implements IEntityProcessor {
                 double changeY = Math.sin(Math.toRadians(player.getRotation()));
                 player.setX(player.getX() + changeX);
                 player.setY(player.getY() + changeY);
+                world.setPlayerX(player.getX());
+                world.setPlayerY(player.getY());
             }
             if (gameData.getKeys().isDown(GameKeys.SPACE)) {
                 getBulletSPIs().stream().findFirst().ifPresent(

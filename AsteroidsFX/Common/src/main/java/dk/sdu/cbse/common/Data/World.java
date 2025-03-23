@@ -8,11 +8,52 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class World {
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
+    private int destroyedAsteroids;
+    private int destroyedEnemies;
+    private double playerX;
+    private double playerY;
+
+    public double getPlayerY() {
+        return playerY;
+    }
+
+    public void setPlayerY(double playerY) {
+        this.playerY = playerY;
+    }
+
+
+    public double getPlayerX() {
+        return playerX;
+    }
+
+    public void setPlayerX(double playerX) {
+        this.playerX = playerX;
+    }
+
+
+    public int getDestroyedAsteroids() {
+        return destroyedAsteroids;
+    }
+
+
+    public int getDestroyedEnemies() {
+        return destroyedEnemies;
+    }
+
+    public <T> void updateDestroyedEntities(Class<T> type) {
+        String entityName = type.getSimpleName();
+        if (entityName.equals("Asteroid")){
+            destroyedAsteroids += 1;
+        } else if (entityName.equals("Enemy")){
+            destroyedEnemies += 1;
+        }
+    }
 
     public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
         return entity.getID();
     }
+
 
     public void removeEntity(String entityID) {
         entityMap.remove(entityID);

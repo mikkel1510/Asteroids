@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Collection;
@@ -31,6 +33,8 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
+    private final Text destroyedAsteroids = new Text(20, 30, "");
+    private final Text destroyedEnemies = new Text(550, 30, "");
 
     public static void main(String[] args) {
         launch(args);
@@ -40,8 +44,17 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(),gameData.getDisplayHeight());
 
+        destroyedAsteroids.setFill(Color.WHITE);
+        destroyedAsteroids.setFont(new Font(24));
+        destroyedEnemies.setFill(Color.WHITE);
+        destroyedEnemies.setFont(new Font(24));
+
+        gameWindow.getChildren().add(destroyedAsteroids);
+        gameWindow.getChildren().add(destroyedEnemies);
+
         Scene scene = new Scene(gameWindow);
         scene.setFill(Color.BLACK);
+
 
         for (int i = 0; i < 100; i++) {
             Rectangle rect = new Rectangle(Math.random()*(gameData.getDisplayWidth()), Math.random()*(gameData.getDisplayHeight()), 1, 1);
@@ -113,6 +126,8 @@ public class Main extends Application {
         for (IPostProcessor postProcessor : getPostProcessor()){
             postProcessor.process(gameData, world);
         }
+        destroyedAsteroids.setText("Destroyed Asteroids: "+world.getDestroyedAsteroids());
+        destroyedEnemies.setText("Destroyed Enemies: "+world.getDestroyedEnemies());
     }
 
     private void draw(){

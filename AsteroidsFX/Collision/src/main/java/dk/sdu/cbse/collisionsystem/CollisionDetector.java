@@ -17,6 +17,10 @@ public class CollisionDetector implements IPostProcessor {
                 }
 
                 if (this.collides(entity1, entity2)){
+                    if (entity1.getClass().getSimpleName().equals("Bullet") || entity2.getClass().getSimpleName().equals("Bullet")){
+                        world.updateDestroyedEntities(entity1.getClass());
+                        world.updateDestroyedEntities(entity2.getClass());
+                    }
                     world.removeEntity(entity1);
                     world.removeEntity(entity2);
                 }

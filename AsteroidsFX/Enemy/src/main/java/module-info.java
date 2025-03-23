@@ -6,7 +6,6 @@ import dk.sdu.cbse.enemysystem.EnemyPlugin;
 
 module Enemy {
     requires Common;
-    requires Player;
     requires Bullet;
 
     uses BulletSPI;

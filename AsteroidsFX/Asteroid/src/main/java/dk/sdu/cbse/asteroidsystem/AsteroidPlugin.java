@@ -9,7 +9,7 @@ import dk.sdu.cbse.common.Services.IGamePluginService;
 import java.util.Random;
 
 public class AsteroidPlugin implements IGamePluginService {
-    Entity asteroid;
+    private Entity asteroid;
 
     @Override
     public void start(GameData gameData, World world) {
@@ -34,6 +34,6 @@ public class AsteroidPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-
+        world.removeEntity(asteroid);
     }
 }
