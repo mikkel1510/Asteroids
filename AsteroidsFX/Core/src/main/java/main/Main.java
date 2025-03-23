@@ -1,21 +1,21 @@
 package main;
 
-import main.common.Data.Entity;
-import main.common.Data.GameData;
-import main.common.Data.GameKeys;
-import main.common.Data.World;
-import main.common.Services.IEntityProcessor;
-import main.common.Services.IGamePluginService;
-import main.common.Services.IPostProcessor;
+import dk.sdu.cbse.common.Data.Entity;
+import dk.sdu.cbse.common.Data.GameData;
+import dk.sdu.cbse.common.Data.GameKeys;
+import dk.sdu.cbse.common.Data.World;
+import dk.sdu.cbse.common.Services.IEntityProcessor;
+import dk.sdu.cbse.common.Services.IGamePluginService;
+import dk.sdu.cbse.common.Services.IPostProcessor;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.scene.input.KeyCode;
 
 import java.util.Collection;
 import java.util.Map;
@@ -31,7 +31,6 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
-    private final CollisionDetector detector = new CollisionDetector();
 
     public static void main(String[] args) {
         launch(args);
@@ -85,7 +84,6 @@ public class Main extends Application {
         }
 
         for (Entity entity : world.getEntities()){
-            System.out.println(entity.getID());
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);

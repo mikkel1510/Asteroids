@@ -15,6 +15,12 @@
 
   <modules>
     <module>Core</module>
+    <module>Player</module>
+    <module>Enemy</module>
+    <module>Asteroid</module>
+    <module>Bullet</module>
+    <module>Common</module>
+    <module>Collision</module>
   </modules>
 
   <dependencyManagement>
