@@ -9,14 +9,19 @@ import dk.sdu.cbse.common.Services.IEntityProcessor;
 public class AsteroidControlSystem implements IEntityProcessor {
 
     private AsteroidPlugin plugin = new AsteroidPlugin();
+    private AsteroidSplitter splitter = new AsteroidSplitter();
 
     @Override
     public void process(GameData gameData, World world) {
         if (world.getEntities(Asteroid.class).isEmpty()){
             plugin.start(gameData, world);
         }
-
         for (Entity asteroid : world.getEntities(Asteroid.class)){
+            if (asteroid.isHit()){
+                splitter.createSplitAsteroid(asteroid, world);
+                world.removeEntity(asteroid);
+            }
+
             double changeX = Math.cos(Math.toRadians(asteroid.getRotation()));
             double changeY = Math.sin(Math.toRadians(asteroid.getRotation()));
 

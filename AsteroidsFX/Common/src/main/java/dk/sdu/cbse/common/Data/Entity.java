@@ -5,15 +5,24 @@ import java.util.UUID;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public class Entity {
+public abstract class Entity {
     private final UUID ID = UUID.randomUUID();
-
 
     private double[] polygonCoordinates;
     private double x;
     private double y;
     private double rotation;
     private float radius;
+    private int health;
+    private boolean isHit; //Todo: Maybe not the best solution
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
 
     public double[] getPolygonCoordinates() {
         return polygonCoordinates;
@@ -71,5 +80,13 @@ public class Entity {
 
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setHit(boolean hit) {
+        isHit = hit;
     }
 }

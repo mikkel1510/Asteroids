@@ -14,20 +14,21 @@ public class EnemyPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         for (int i = 0; i < 1; i++) {
-            enemy = createEnemyShip(gameData);
+            enemy = createEnemy(gameData);
             world.addEntity(enemy);
         }
     }
 
-    private Entity createEnemyShip(GameData gameData){
-        Entity enemyShip = new Enemy();
-        enemyShip.setPolygonCoordinates(-5,-5,10,0,-5,5);
+    private Entity createEnemy(GameData gameData){
+        Entity enemy = new Enemy();
+        enemy.setPolygonCoordinates(-5,-5,10,0,-5,5);
         Random random = new Random();
-        enemyShip.setX(random.nextInt(gameData.getDisplayHeight()));
-        enemyShip.setY(random.nextInt(gameData.getDisplayWidth()));
-        enemyShip.setRadius(8);
-        enemyShip.setColor("red");
-        return enemyShip;
+        enemy.setX(random.nextInt(gameData.getDisplayHeight()));
+        enemy.setY(random.nextInt(gameData.getDisplayWidth()));
+        enemy.setRadius(8);
+        enemy.setColor("red");
+        enemy.setHealth(10);
+        return enemy;
     }
 
     @Override

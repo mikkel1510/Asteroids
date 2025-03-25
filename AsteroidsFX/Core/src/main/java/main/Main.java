@@ -59,6 +59,11 @@ public class Main extends Application {
         for (int i = 0; i < 100; i++) {
             Rectangle rect = new Rectangle(Math.random()*(gameData.getDisplayWidth()), Math.random()*(gameData.getDisplayHeight()), 1, 1);
             rect.setFill(Color.WHITE);
+            if (i % 14 == 0){
+                rect.setFill(Color.YELLOW);
+                rect.setHeight(2);
+                rect.setWidth(2);
+            }
             gameWindow.getChildren().add(rect);
         }
 

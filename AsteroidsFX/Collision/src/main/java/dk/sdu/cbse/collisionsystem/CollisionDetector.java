@@ -17,14 +17,20 @@ public class CollisionDetector implements IPostProcessor {
                 }
 
                 if (this.collides(entity1, entity2)){
-                    if (entity1.getClass().getSimpleName().equals("Bullet") || entity2.getClass().getSimpleName().equals("Bullet")){
-                        world.updateDestroyedEntities(entity1.getClass());
-                        world.updateDestroyedEntities(entity2.getClass());
-                    }
-                    world.removeEntity(entity1);
-                    world.removeEntity(entity2);
+                    handleCollision(entity1, world);
+                    handleCollision(entity2, world);
                 }
             }
+        }
+    }
+
+    public void handleCollision(Entity entity, World world){
+        if (entity.getHealth() > 1){
+            entity.setHit(true);
+            entity.setHealth(entity.getHealth()-1);
+        } else {
+            world.updateDestroyedEntities(entity.getClass());
+            world.removeEntity(entity);
         }
     }
 

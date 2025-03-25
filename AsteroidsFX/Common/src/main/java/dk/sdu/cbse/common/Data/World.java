@@ -40,7 +40,7 @@ public class World {
         return destroyedEnemies;
     }
 
-    public <T> void updateDestroyedEntities(Class<T> type) {
+    public <T> void updateDestroyedEntities(Class<T> type) { //TODO: Not good, tight coupling
         String entityName = type.getSimpleName();
         if (entityName.equals("Asteroid")){
             destroyedAsteroids += 1;

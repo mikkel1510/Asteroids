@@ -13,6 +13,9 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
 public class PlayerControlSystem implements IEntityProcessor {
+    private long lastFired;
+    private long fireRate = 300;
+
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player : world.getEntities(Player.class)) {
@@ -30,10 +33,11 @@ public class PlayerControlSystem implements IEntityProcessor {
                 world.setPlayerX(player.getX());
                 world.setPlayerY(player.getY());
             }
-            if (gameData.getKeys().isDown(GameKeys.SPACE)) {
+            if (gameData.getKeys().isDown(GameKeys.SPACE) && System.currentTimeMillis() - lastFired > 300) {
                 getBulletSPIs().stream().findFirst().ifPresent(
                         spi -> world.addEntity(spi.createBullet(player, gameData))
                 );
+                lastFired = System.currentTimeMillis();
             }
         }
     }
