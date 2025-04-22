@@ -18,14 +18,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static java.util.stream.Collectors.toList;
-
 
 public class Main extends Application {
 
@@ -35,6 +32,9 @@ public class Main extends Application {
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Text destroyedAsteroids = new Text(20, 30, "");
     private final Text destroyedEnemies = new Text(550, 30, "");
+    private List<IGamePluginService> gamePluginServices;
+    private List<IEntityProcessor> entityProcessorList;
+    private List<IPostProcessor> postProcessorList;
 
     public static void main(String[] args) {
         launch(args);
@@ -42,6 +42,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Modules.class);
+        gamePluginServices = context.getBean("gamePluginServiceList", List.class);
+        entityProcessorList = context.getBean("entityProcessorList", List.class);
+        postProcessorList = context.getBean("postProcessorList", List.class);
+
+
         gameWindow.setPrefSize(gameData.getDisplayWidth(),gameData.getDisplayHeight());
 
         destroyedAsteroids.setFill(Color.WHITE);
@@ -97,7 +103,7 @@ public class Main extends Application {
 
         });
 
-        for (IGamePluginService iGamePlugin : getPluginServices()){
+        for (IGamePluginService iGamePlugin : gamePluginServices){
             iGamePlugin.start(gameData, world);
         }
 
@@ -125,10 +131,10 @@ public class Main extends Application {
     }
 
     private void update(){
-        for (IEntityProcessor entityProcessor : getEntityProcessor()){
+        for (IEntityProcessor entityProcessor : entityProcessorList){
             entityProcessor.process(gameData, world);
         }
-        for (IPostProcessor postProcessor : getPostProcessor()){
+        for (IPostProcessor postProcessor : postProcessorList){
             postProcessor.process(gameData, world);
         }
         destroyedAsteroids.setText("Destroyed Asteroids: "+world.getDestroyedAsteroids());
@@ -156,18 +162,5 @@ public class Main extends Application {
             polygon.setRotate(entity.getRotation());
             polygon.setFill(entity.getColor());
         }
-    }
-
-
-    private Collection<? extends IGamePluginService> getPluginServices(){;
-        return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private Collection<? extends IEntityProcessor> getEntityProcessor(){
-        return ServiceLoader.load(IEntityProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private Collection<? extends IPostProcessor> getPostProcessor(){
-        return ServiceLoader.load(IPostProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
