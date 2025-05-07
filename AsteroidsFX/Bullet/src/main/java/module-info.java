@@ -9,7 +9,6 @@ module Bullet {
     requires Common;
     exports dk.sdu.cbse.bulletsystem;
 
-    provides IGamePluginService with BulletPlugin;
     provides IEntityProcessor with BulletControlSystem;
-    provides BulletSPI with BulletControlSystem;
+    provides BulletSPI with BulletPlugin;
 }

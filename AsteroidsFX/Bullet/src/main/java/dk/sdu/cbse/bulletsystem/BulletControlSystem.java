@@ -6,7 +6,7 @@ import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IEntityProcessor;
 
-public class BulletControlSystem implements IEntityProcessor, BulletSPI {
+public class BulletControlSystem implements IEntityProcessor {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Bullet.class)) {
@@ -19,19 +19,5 @@ public class BulletControlSystem implements IEntityProcessor, BulletSPI {
                 world.getEntities().remove(bullet);
             }
         }
-    }
-
-    @Override
-    public Entity createBullet(Entity shooter, GameData gameData) {
-        Entity bullet = new Bullet();
-        bullet.setPolygonCoordinates(8, -2, 8, 2, -8, 2, -8, -2);
-        double changeX = Math.cos(Math.toRadians(shooter.getRotation()));
-        double changeY = Math.sin(Math.toRadians(shooter.getRotation()));
-        bullet.setX(shooter.getX() + changeX * 10);
-        bullet.setY(shooter.getY() + changeY * 10);
-        bullet.setRotation(shooter.getRotation());
-        bullet.setColor("green");
-        bullet.setRadius(1);
-        return bullet;
     }
 }
