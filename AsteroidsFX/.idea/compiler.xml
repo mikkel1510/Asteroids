@@ -13,10 +13,16 @@
         <module name="Collision" />
         <module name="Core" />
         <module name="Common" />
+        <module name="ScoringSystem" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="untitled" target="21" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ScoringSystem" options="-parameters" />
+    </option>
   </component>
 </project>

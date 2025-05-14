@@ -22,6 +22,7 @@
     <module>Bullet</module>
     <module>Common</module>
     <module>Collision</module>
+    <module>ScoringSystem</module>
   </modules>
 
   <dependencyManagement>
