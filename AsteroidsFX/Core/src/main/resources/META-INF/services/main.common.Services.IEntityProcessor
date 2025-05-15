@@ -1,0 +1,4 @@
+main.asteroidsystem.AsteroidControlSystem
+main.bulletsystem.BulletControlSystem
+main.enemysystem.EnemyControlSystem
+main.playersystem.PlayerControlSystem

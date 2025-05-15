@@ -1,12 +1,12 @@
 package main;
 
-import main.asteroidsystem.Asteroid;
-import main.bulletsystem.Bullet;
-import main.common.Entity;
-import main.common.GameData;
-import main.common.GameKeys;
-import main.common.World;
-import main.enemysystem.Enemy;
+import main.common.Data.Entity;
+import main.common.Data.GameData;
+import main.common.Data.GameKeys;
+import main.common.Data.World;
+import main.common.Services.IEntityProcessor;
+import main.common.Services.IGamePluginService;
+import main.common.Services.IPostProcessor;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,10 +16,13 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
-import main.playersystem.Player;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class Main extends Application {
@@ -77,14 +80,12 @@ public class Main extends Application {
 
         });
 
-        Player player = new Player();
-        player.start(gameData, world);
-        Enemy enemy = new Enemy();
-        enemy.start(gameData, world);
-        Asteroid asteroid = new Asteroid();
-        asteroid.start(gameData, world);
+        for (IGamePluginService iGamePlugin : getPluginServices()){
+            iGamePlugin.start(gameData, world);
+        }
 
         for (Entity entity : world.getEntities()){
+            System.out.println(entity.getID());
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
@@ -108,10 +109,12 @@ public class Main extends Application {
     }
 
     private void update(){
-        for (Entity entity : world.getEntities()){
-            entity.process(gameData,world);
+        for (IEntityProcessor entityProcessor : getEntityProcessor()){
+            entityProcessor.process(gameData, world);
         }
-        detector.process(gameData, world);
+        for (IPostProcessor postProcessor : getPostProcessor()){
+            postProcessor.process(gameData, world);
+        }
     }
 
     private void draw(){
@@ -130,15 +133,23 @@ public class Main extends Application {
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);
             }
-            if (entity instanceof Bullet) {
-                if (entity.getX() > 800 | entity.getX() < 0 | entity.getY() > 800 | entity.getY() < 0) {
-                    world.getEntities().remove(entity);
-                }
-            }
             polygon.setTranslateX(entity.getX());
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
             polygon.setFill(entity.getColor());
         }
+    }
+
+
+    private Collection<? extends IGamePluginService> getPluginServices(){;
+        return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private Collection<? extends IEntityProcessor> getEntityProcessor(){
+        return ServiceLoader.load(IEntityProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private Collection<? extends IPostProcessor> getPostProcessor(){
+        return ServiceLoader.load(IPostProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

@@ -1,4 +1,4 @@
-package main.common;
+package main.common.Data;
 
 public class GameData {
     private int displayWidth = 800;

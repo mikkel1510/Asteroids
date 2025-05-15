@@ -2,12 +2,7 @@ package main.bulletsystem;
 
 import main.common.Data.Entity;
 import main.common.Data.GameData;
-import main.common.Data.World;
 
-/**
- * Hello world!
- *
- */
-public class Bullet extends Entity
-{
+public interface BulletSPI {
+    Entity createBullet(Entity shooter, GameData gameData);
 }

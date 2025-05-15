@@ -1,11 +1,13 @@
 package main;
 
-import main.common.Entity;
-import main.common.GameData;
-import main.common.World;
+import main.common.Data.Entity;
+import main.common.Data.GameData;
+import main.common.Data.World;
+import main.common.Services.IPostProcessor;
 
-public class CollisionDetector {
+public class CollisionDetector implements IPostProcessor {
 
+    @Override
     public void process(GameData gameData, World world){
         for (Entity entity1 : world.getEntities()){
             for (Entity entity2 : world.getEntities()){

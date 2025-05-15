@@ -1,4 +1,4 @@
-package main.common;
+package main.common.Data;
 
 public class GameKeys {
     private static boolean[] keys;
