@@ -23,6 +23,8 @@
     <module>Common</module>
     <module>Collision</module>
     <module>ScoringSystem</module>
+    <module>ScoringClient</module>
+    <module>CommonSpringClient</module>
   </modules>
 
   <dependencyManagement>

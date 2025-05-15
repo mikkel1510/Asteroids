@@ -7,6 +7,7 @@ import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IEntityProcessor;
 import dk.sdu.cbse.common.Services.IGamePluginService;
 import dk.sdu.cbse.common.Services.IPostProcessor;
+import dk.sdu.common.springclient.ISpringClient;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Main extends Application {
@@ -35,6 +37,7 @@ public class Main extends Application {
     private List<IGamePluginService> gamePluginServices;
     private List<IEntityProcessor> entityProcessorList;
     private List<IPostProcessor> postProcessorList;
+    private List<ISpringClient> springClients;
 
     public static void main(String[] args) {
         launch(args);
@@ -46,7 +49,8 @@ public class Main extends Application {
         gamePluginServices = context.getBean("gamePluginServiceList", List.class);
         entityProcessorList = context.getBean("entityProcessorList", List.class);
         postProcessorList = context.getBean("postProcessorList", List.class);
-
+        springClients = context.getBean("springClient", List.class);
+        System.out.println(springClients);;
 
         gameWindow.setPrefSize(gameData.getDisplayWidth(),gameData.getDisplayHeight());
 
@@ -60,7 +64,6 @@ public class Main extends Application {
 
         Scene scene = new Scene(gameWindow);
         scene.setFill(Color.BLACK);
-
 
         for (int i = 0; i < 100; i++) {
             Rectangle rect = new Rectangle(Math.random()*(gameData.getDisplayWidth()), Math.random()*(gameData.getDisplayHeight()), 1, 1);

@@ -3,6 +3,7 @@ package main;
 import dk.sdu.cbse.common.Services.IEntityProcessor;
 import dk.sdu.cbse.common.Services.IGamePluginService;
 import dk.sdu.cbse.common.Services.IPostProcessor;
+import dk.sdu.common.springclient.ISpringClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +27,11 @@ public class Modules {
     @Bean
     public List<IPostProcessor> postProcessorList(){
         return ServiceLoader.load(IPostProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    @Bean
+    public List<ISpringClient> springClient(){
+        return ServiceLoader.load(ISpringClient.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
 }

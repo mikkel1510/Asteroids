@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ScoringSystem {
 
+	private int totalPoints = 0;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ScoringSystem.class, args);
 	}
 
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
+	@GetMapping("/points")
+	public int incrementPoints(@RequestParam(value = "points") int points) {
+		totalPoints += points;
+		return totalPoints;
 	}
 
 }
