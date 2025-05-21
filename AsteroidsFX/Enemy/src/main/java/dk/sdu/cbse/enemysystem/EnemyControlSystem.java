@@ -5,6 +5,7 @@ import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IEntityProcessor;
 import dk.sdu.cbse.bulletsystem.BulletSPI;
+import dk.sdu.cbse.commonenemy.Enemy;
 
 import java.util.Collection;
 import java.util.Random;

@@ -6,6 +6,7 @@ import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IGamePluginService;
+import dk.sdu.cbse.commonenemy.Enemy;
 
 public class EnemyPlugin implements IGamePluginService {
     private Entity enemy;;
@@ -20,7 +21,7 @@ public class EnemyPlugin implements IGamePluginService {
     }
 
     private Entity createEnemy(GameData gameData){
-        Entity enemy = new Enemy();
+        Enemy enemy = new Enemy();
         enemy.setPolygonCoordinates(-5,-5,10,0,-5,5);
         Random random = new Random();
         enemy.setX(random.nextInt(gameData.getDisplayHeight()));
@@ -28,6 +29,7 @@ public class EnemyPlugin implements IGamePluginService {
         enemy.setRadius(8);
         enemy.setColor("red");
         enemy.setHealth(10);
+        enemy.setFireRate(300);
         return enemy;
     }
 

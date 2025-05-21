@@ -25,6 +25,10 @@
     <module>ScoringSystem</module>
     <module>ScoringClient</module>
     <module>CommonSpringClient</module>
+    <module>CommonPlayer</module>
+    <module>CommonShip</module>
+    <module>CommonEnemy</module>
+    <module>CommonAsteroid</module>
   </modules>
 
   <dependencyManagement>
@@ -45,6 +49,7 @@
         <version>21.0.2</version>
       </dependency>
 
+      <!--Spring dependencies-->
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
@@ -85,7 +90,16 @@
         <artifactId>spring-web</artifactId>
         <version>${spring.version}</version>
       </dependency>
-
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-observation</artifactId>
+        <version>1.12.3</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-commons</artifactId>
+        <version>1.12.3</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

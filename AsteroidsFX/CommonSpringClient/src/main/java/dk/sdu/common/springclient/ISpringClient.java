@@ -1,5 +1,6 @@
 package dk.sdu.common.springclient;
 
 public interface ISpringClient {
-    int get();
+    String get();
+    void post(int points); //TODO: Parametize
 }

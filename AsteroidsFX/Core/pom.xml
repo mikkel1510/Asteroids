@@ -67,6 +67,12 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>dk.sdu.cbse</groupId>
+            <artifactId>ScoringClient</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
@@ -83,7 +89,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <includeArtifactIds>javafx-controls,javafx-graphics,javafx-base, spring-context, spring-core, spring-beans, spring-aop, spring-expression, spring-jcl, spring-web</includeArtifactIds>
+                            <includeArtifactIds>javafx-controls,javafx-graphics,javafx-base, spring-context, spring-core, spring-beans, spring-aop, spring-expression, spring-jcl, spring-web, micrometer-observation, micrometer-commons</includeArtifactIds>
                             <outputDirectory>../mods-mvn</outputDirectory>
                         </configuration>
                     </execution>

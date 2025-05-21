@@ -6,6 +6,7 @@ import dk.sdu.cbse.playersystem.PlayerPlugin;
 
 module Player {
     requires Common;
+    requires CommonPlayer;
     requires Bullet;
 
     exports dk.sdu.cbse.playersystem;

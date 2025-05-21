@@ -1,26 +1,25 @@
 package dk.sdu.cbse.scoringclient;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import dk.sdu.common.springclient.ISpringClient;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootApplication
-public class ScoringClient {
+public class ScoringClient implements ISpringClient {
 
     private RestTemplate restTemplate;
+    private static final String url = "http://localhost:8080";
 
     public ScoringClient(){
         this.restTemplate = new RestTemplate();
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(ScoringClient.class, args);
+    @Override
+    public String get() {
+        String response = restTemplate.getForObject(url+"/points", String.class);
+        return response;
     }
 
-    @Bean
-    public String getPoints() throws Exception {
-        String response = restTemplate.getForObject("http://localhost:8080/points?points=1", String.class);
-        return response;
+    @Override
+    public void post(int points){
+        restTemplate.postForObject(url+"/points?points="+points, null, Void.class);
     }
 }

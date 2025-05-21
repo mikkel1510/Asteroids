@@ -5,6 +5,7 @@ import dk.sdu.cbse.common.Services.IGamePluginService;
 
 module Asteroid {
     requires Common;
+    requires CommonAsteroid;
 
     provides IEntityProcessor with AsteroidControlSystem;
     provides IGamePluginService with AsteroidPlugin;

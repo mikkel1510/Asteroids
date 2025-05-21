@@ -6,6 +6,7 @@ import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.GameKeys;
 import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IEntityProcessor;
+import dk.sdu.cbse.commonplayer.Player;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -14,11 +15,11 @@ import static java.util.stream.Collectors.toList;
 
 public class PlayerControlSystem implements IEntityProcessor {
     private long lastFired;
-    private long fireRate = 300;
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity player : world.getEntities(Player.class)) {
+        for (Entity entity : world.getEntities(Player.class)) {
+            Player player = (Player) entity;
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 5);
             }
@@ -33,7 +34,7 @@ public class PlayerControlSystem implements IEntityProcessor {
                 world.setPlayerX(player.getX());
                 world.setPlayerY(player.getY());
             }
-            if (gameData.getKeys().isDown(GameKeys.SPACE) && System.currentTimeMillis() - lastFired > 300) {
+            if (gameData.getKeys().isDown(GameKeys.SPACE) && System.currentTimeMillis() - lastFired > player.getFireRate()) {
                 getBulletSPIs().stream().findFirst().ifPresent(
                         spi -> world.addEntity(spi.createBullet(player, gameData))
                 );

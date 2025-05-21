@@ -10,6 +10,7 @@ module Core {
     requires spring.context;
     requires spring.core;
     requires spring.beans;
+    requires ScoringClient;
 
     exports main;
     opens main to spring.core;

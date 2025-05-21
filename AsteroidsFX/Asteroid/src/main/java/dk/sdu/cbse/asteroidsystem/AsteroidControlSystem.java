@@ -5,6 +5,7 @@ import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IEntityProcessor;
+import dk.sdu.cbse.commonasteroid.Asteroid;
 
 public class AsteroidControlSystem implements IEntityProcessor {
 

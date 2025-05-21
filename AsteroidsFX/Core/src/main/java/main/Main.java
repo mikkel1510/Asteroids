@@ -23,7 +23,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Main extends Application {
@@ -32,8 +31,8 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
-    private final Text destroyedAsteroids = new Text(20, 30, "");
-    private final Text destroyedEnemies = new Text(550, 30, "");
+    private int points = 0;
+    private final Text pointLabel = new Text(20, 30, "");
     private List<IGamePluginService> gamePluginServices;
     private List<IEntityProcessor> entityProcessorList;
     private List<IPostProcessor> postProcessorList;
@@ -50,17 +49,15 @@ public class Main extends Application {
         entityProcessorList = context.getBean("entityProcessorList", List.class);
         postProcessorList = context.getBean("postProcessorList", List.class);
         springClients = context.getBean("springClient", List.class);
-        System.out.println(springClients);;
+
+        springClients.getFirst().post(100); //TODO: Post when destroying entities
 
         gameWindow.setPrefSize(gameData.getDisplayWidth(),gameData.getDisplayHeight());
 
-        destroyedAsteroids.setFill(Color.WHITE);
-        destroyedAsteroids.setFont(new Font(24));
-        destroyedEnemies.setFill(Color.WHITE);
-        destroyedEnemies.setFont(new Font(24));
+        pointLabel.setFill(Color.WHITE);
+        pointLabel.setFont(new Font(24));
 
-        gameWindow.getChildren().add(destroyedAsteroids);
-        gameWindow.getChildren().add(destroyedEnemies);
+        gameWindow.getChildren().add(pointLabel);
 
         Scene scene = new Scene(gameWindow);
         scene.setFill(Color.BLACK);
@@ -140,8 +137,8 @@ public class Main extends Application {
         for (IPostProcessor postProcessor : postProcessorList){
             postProcessor.process(gameData, world);
         }
-        destroyedAsteroids.setText("Destroyed Asteroids: "+world.getDestroyedAsteroids());
-        destroyedEnemies.setText("Destroyed Enemies: "+world.getDestroyedEnemies());
+        points = Integer.parseInt(springClients.getFirst().get());
+        pointLabel.setText("Points: "+points);
     }
 
     private void draw(){

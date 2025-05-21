@@ -2,6 +2,7 @@ package dk.sdu.cbse.asteroidsystem;
 
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.World;
+import dk.sdu.cbse.commonasteroid.Asteroid;
 
 import java.util.Random;
 

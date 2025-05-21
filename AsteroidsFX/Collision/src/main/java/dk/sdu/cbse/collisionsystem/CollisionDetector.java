@@ -5,6 +5,8 @@ import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IPostProcessor;
+import dk.sdu.cbse.commonasteroid.Asteroid;
+import dk.sdu.cbse.commonenemy.Enemy;
 
 public class CollisionDetector implements IPostProcessor {
 
@@ -29,7 +31,9 @@ public class CollisionDetector implements IPostProcessor {
             entity.setHit(true);
             entity.setHealth(entity.getHealth()-1);
         } else {
-            world.updateDestroyedEntities(entity.getClass());
+            if (entity instanceof Enemy || entity instanceof Asteroid){
+                System.out.println("You got a point!"); //TODO: Increase score
+            }
             world.removeEntity(entity);
         }
     }
