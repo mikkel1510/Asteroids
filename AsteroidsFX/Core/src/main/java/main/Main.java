@@ -126,7 +126,7 @@ public class Main extends Application {
             @Override
             public void handle(long l) {
                 update();
-                draw();
+                drawEntities();
                 gameData.getKeys().update();
             }
         }.start();
@@ -143,7 +143,7 @@ public class Main extends Application {
         pointLabel.setText("Points: "+points);
     }
 
-    private void draw(){
+    private void drawEntities(){
         for (Entity polygonEntity : polygons.keySet()){
             if (!world.getEntities().contains(polygonEntity)){
                 Polygon removedPolygon = polygons.get(polygonEntity);
@@ -159,9 +159,6 @@ public class Main extends Application {
 
         for (Entity entity : world.getEntities()){
 
-
-
-
             Polygon polygon = polygons.get(entity);
             if (polygon == null){
                 polygon = new Polygon(entity.getPolygonCoordinates());
@@ -174,24 +171,28 @@ public class Main extends Application {
             polygon.setFill(entity.getColor());
 
             if (entity instanceof SpaceShip spaceShip){
-                Polygon healthPolygon = healthBarPolygons.get(spaceShip);
-
-                if (healthPolygon == null){
-                    healthPolygon = new Polygon(spaceShip.getHealthBarCoords());
-                    healthPolygon.setFill(Color.web(spaceShip.getHealthBarColor()));
-                    gameWindow.getChildren().add(healthPolygon);
-                    healthBarPolygons.put(spaceShip, healthPolygon);
-                } else {
-                    healthPolygon.getPoints().setAll(
-                            Arrays.stream(spaceShip.getHealthBarCoords())
-                                    .boxed()
-                                    .collect(Collectors.toList())
-                    );
-                    healthPolygon.setFill(Color.web(spaceShip.getHealthBarColor()));
-                }
-                healthPolygon.setTranslateX(entity.getX());
-                healthPolygon.setTranslateY(entity.getY() + (entity.getRadius() * 1.2));
+                drawHealthBar(spaceShip);
             }
         }
+    }
+
+    private void drawHealthBar(SpaceShip spaceShip){
+        Polygon healthPolygon = healthBarPolygons.get(spaceShip);
+
+        if (healthPolygon == null){
+            healthPolygon = new Polygon(spaceShip.getHealthBarCoords());
+            healthPolygon.setFill(Color.web(spaceShip.getHealthBarColor()));
+            gameWindow.getChildren().add(healthPolygon);
+            healthBarPolygons.put(spaceShip, healthPolygon);
+        } else {
+            healthPolygon.getPoints().setAll(
+                    Arrays.stream(spaceShip.getHealthBarCoords())
+                            .boxed()
+                            .collect(Collectors.toList())
+            );
+            healthPolygon.setFill(Color.web(spaceShip.getHealthBarColor()));
+        }
+        healthPolygon.setTranslateX(spaceShip.getX());
+        healthPolygon.setTranslateY(spaceShip.getY() + (spaceShip.getRadius() * 1.2));
     }
 }

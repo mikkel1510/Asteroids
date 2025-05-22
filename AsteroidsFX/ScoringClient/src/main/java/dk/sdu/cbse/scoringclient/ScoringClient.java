@@ -1,6 +1,7 @@
 package dk.sdu.cbse.scoringclient;
 
 import dk.sdu.common.springclient.ISpringClient;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class ScoringClient implements ISpringClient {
@@ -14,12 +15,20 @@ public class ScoringClient implements ISpringClient {
 
     @Override
     public String get() {
-        String response = restTemplate.getForObject(url+"/points", String.class);
-        return response;
+        try {
+            return restTemplate.getForObject(url+"/points", String.class);
+        } catch (RestClientException e){
+            System.err.println("Failed to get points: "+e.getMessage());
+            return "0";
+        }
     }
 
     @Override
     public void post(int points){
-        restTemplate.postForObject(url+"/points?points="+points, null, Void.class);
+        try {
+            restTemplate.postForObject(url+"/points?points="+points, null, Void.class);
+        } catch (RestClientException e){
+            System.err.println("Failed to post points: "+e.getMessage());
+        }
     }
 }

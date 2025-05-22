@@ -23,7 +23,7 @@ public class ScoringSystem {
 	}
 
 	@PostMapping("/points")
-	public void incrementPoints(@RequestParam int points){
+	public void incrementPoints(@RequestParam("points") int points){
 		totalPoints += points;
 	}
 
