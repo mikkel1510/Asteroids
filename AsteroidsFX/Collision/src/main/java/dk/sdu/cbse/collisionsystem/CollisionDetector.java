@@ -7,6 +7,12 @@ import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IPostProcessor;
 import dk.sdu.cbse.commonasteroid.Asteroid;
 import dk.sdu.cbse.commonenemy.Enemy;
+import dk.sdu.common.springclient.ISpringClient;
+
+import java.util.ServiceLoader;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class CollisionDetector implements IPostProcessor {
 
@@ -27,13 +33,13 @@ public class CollisionDetector implements IPostProcessor {
     }
 
     public void handleCollision(Entity entity, World world){
+        if (entity instanceof Enemy || entity instanceof Asteroid){
+            ServiceLoader.load(ISpringClient.class).findFirst().ifPresent(client -> client.post(1));
+        }
         if (entity.getHealth() > 1){
             entity.setHit(true);
             entity.setHealth(entity.getHealth()-1);
         } else {
-            if (entity instanceof Enemy || entity instanceof Asteroid){
-                System.out.println("You got a point!"); //TODO: Increase score
-            }
             world.removeEntity(entity);
         }
     }

@@ -11,6 +11,7 @@ module Core {
     requires spring.core;
     requires spring.beans;
     requires ScoringClient;
+    requires CommonShip;
 
     exports main;
     opens main to spring.core;

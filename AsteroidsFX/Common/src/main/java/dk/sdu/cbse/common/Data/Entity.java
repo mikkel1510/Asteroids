@@ -13,8 +13,17 @@ public abstract class Entity {
     private double y;
     private double rotation;
     private float radius;
-    private int health;
+    private int health; //TODO: Maybe move to spaceship class
+    private int maxHealth;
     private boolean isHit; //Todo: Maybe not the best solution
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
 
     public int getHealth() {
         return health;

@@ -20,11 +20,12 @@ public class PlayerPlugin implements IGamePluginService {
 
     private Entity createPlayer(GameData gameData) {
         Player player = new Player();
-        player.setPolygonCoordinates(-5,-5,10,0,-5,5);
+        player.setPolygonCoordinates(-7.5,-7.5, 15,0, -7.5,7.5);
         player.setX(gameData.getDisplayHeight()/2);
         player.setY(gameData.getDisplayWidth()/2);
-        player.setRadius(8);
+        player.setRadius(12);
         player.setHealth(10);
+        player.setMaxHealth(10);
         player.setFireRate(300);
         return player;
     }

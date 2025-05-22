@@ -22,13 +22,14 @@ public class EnemyPlugin implements IGamePluginService {
 
     private Entity createEnemy(GameData gameData){
         Enemy enemy = new Enemy();
-        enemy.setPolygonCoordinates(-5,-5,10,0,-5,5);
+        enemy.setPolygonCoordinates(-7.5,-7.5, 15,0, -7.5,7.5);
         Random random = new Random();
         enemy.setX(random.nextInt(gameData.getDisplayHeight()));
         enemy.setY(random.nextInt(gameData.getDisplayWidth()));
-        enemy.setRadius(8);
+        enemy.setRadius(12);
         enemy.setColor("red");
         enemy.setHealth(10);
+        enemy.setMaxHealth(10);
         enemy.setFireRate(300);
         return enemy;
     }

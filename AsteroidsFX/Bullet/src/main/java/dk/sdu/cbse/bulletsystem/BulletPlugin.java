@@ -14,8 +14,8 @@ public class BulletPlugin implements BulletSPI {
         bullet.setPolygonCoordinates(8, -2, 8, 2, -8, 2, -8, -2);
         double changeX = Math.cos(Math.toRadians(shooter.getRotation()));
         double changeY = Math.sin(Math.toRadians(shooter.getRotation()));
-        bullet.setX(shooter.getX() + changeX * 10);
-        bullet.setY(shooter.getY() + changeY * 10);
+        bullet.setX(shooter.getX() + changeX * (shooter.getRadius() + 2));
+        bullet.setY(shooter.getY() + changeY * (shooter.getRadius() + 2));
         bullet.setRotation(shooter.getRotation());
         bullet.setColor("green");
         bullet.setRadius(1);

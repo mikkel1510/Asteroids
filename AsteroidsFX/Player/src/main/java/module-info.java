@@ -8,6 +8,7 @@ module Player {
     requires Common;
     requires CommonPlayer;
     requires Bullet;
+    requires CommonShip;
 
     exports dk.sdu.cbse.playersystem;
 

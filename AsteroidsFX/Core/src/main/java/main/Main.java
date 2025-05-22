@@ -7,6 +7,7 @@ import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IEntityProcessor;
 import dk.sdu.cbse.common.Services.IGamePluginService;
 import dk.sdu.cbse.common.Services.IPostProcessor;
+import dk.sdu.cbse.commonship.SpaceShip;
 import dk.sdu.common.springclient.ISpringClient;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -21,9 +22,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class Main extends Application {
 
@@ -31,6 +34,7 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
+    private final Map<Entity, Polygon> healthBarPolygons = new ConcurrentHashMap<>();
     private int points = 0;
     private final Text pointLabel = new Text(20, 30, "");
     private List<IGamePluginService> gamePluginServices;
@@ -49,8 +53,6 @@ public class Main extends Application {
         entityProcessorList = context.getBean("entityProcessorList", List.class);
         postProcessorList = context.getBean("postProcessorList", List.class);
         springClients = context.getBean("springClient", List.class);
-
-        springClients.getFirst().post(100); //TODO: Post when destroying entities
 
         gameWindow.setPrefSize(gameData.getDisplayWidth(),gameData.getDisplayHeight());
 
@@ -147,10 +149,19 @@ public class Main extends Application {
                 Polygon removedPolygon = polygons.get(polygonEntity);
                 polygons.remove(polygonEntity);
                 gameWindow.getChildren().remove(removedPolygon);
+                if (polygonEntity instanceof SpaceShip){
+                    removedPolygon = healthBarPolygons.get(polygonEntity);
+                    healthBarPolygons.remove(polygonEntity);
+                    gameWindow.getChildren().remove(removedPolygon);
+                }
             }
-
         }
+
         for (Entity entity : world.getEntities()){
+
+
+
+
             Polygon polygon = polygons.get(entity);
             if (polygon == null){
                 polygon = new Polygon(entity.getPolygonCoordinates());
@@ -161,6 +172,26 @@ public class Main extends Application {
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
             polygon.setFill(entity.getColor());
+
+            if (entity instanceof SpaceShip spaceShip){
+                Polygon healthPolygon = healthBarPolygons.get(spaceShip);
+
+                if (healthPolygon == null){
+                    healthPolygon = new Polygon(spaceShip.getHealthBarCoords());
+                    healthPolygon.setFill(Color.web(spaceShip.getHealthBarColor()));
+                    gameWindow.getChildren().add(healthPolygon);
+                    healthBarPolygons.put(spaceShip, healthPolygon);
+                } else {
+                    healthPolygon.getPoints().setAll(
+                            Arrays.stream(spaceShip.getHealthBarCoords())
+                                    .boxed()
+                                    .collect(Collectors.toList())
+                    );
+                    healthPolygon.setFill(Color.web(spaceShip.getHealthBarColor()));
+                }
+                healthPolygon.setTranslateX(entity.getX());
+                healthPolygon.setTranslateY(entity.getY() + (entity.getRadius() * 1.2));
+            }
         }
     }
 }
