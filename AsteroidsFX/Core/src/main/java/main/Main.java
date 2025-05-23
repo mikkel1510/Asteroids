@@ -40,7 +40,7 @@ public class Main extends Application {
     private List<IGamePluginService> gamePluginServices;
     private List<IEntityProcessor> entityProcessorList;
     private List<IPostProcessor> postProcessorList;
-    private List<ISpringClient> springClients;
+    private ISpringClient springClient;
 
     public static void main(String[] args) {
         launch(args);
@@ -52,7 +52,9 @@ public class Main extends Application {
         gamePluginServices = context.getBean("gamePluginServiceList", List.class);
         entityProcessorList = context.getBean("entityProcessorList", List.class);
         postProcessorList = context.getBean("postProcessorList", List.class);
-        springClients = context.getBean("springClient", List.class);
+        springClient = context.getBean("springClient", ISpringClient.class);
+
+        resetPoints();
 
         gameWindow.setPrefSize(gameData.getDisplayWidth(),gameData.getDisplayHeight());
 
@@ -139,7 +141,7 @@ public class Main extends Application {
         for (IPostProcessor postProcessor : postProcessorList){
             postProcessor.process(gameData, world);
         }
-        points = Integer.parseInt(springClients.getFirst().get());
+        points = Integer.parseInt(springClient.get());
         pointLabel.setText("Points: "+points);
     }
 
@@ -194,5 +196,10 @@ public class Main extends Application {
         }
         healthPolygon.setTranslateX(spaceShip.getX());
         healthPolygon.setTranslateY(spaceShip.getY() + (spaceShip.getRadius() * 1.2));
+    }
+
+    void resetPoints(){
+        int points = Integer.parseInt(springClient.get());
+        springClient.post(-points);
     }
 }

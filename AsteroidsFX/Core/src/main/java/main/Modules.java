@@ -30,8 +30,8 @@ public class Modules {
     }
 
     @Bean
-    public List<ISpringClient> springClient(){
-        return ServiceLoader.load(ISpringClient.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    public ISpringClient springClient(){
+        return ServiceLoader.load(ISpringClient.class).findFirst().orElse(null);
     }
 
 }

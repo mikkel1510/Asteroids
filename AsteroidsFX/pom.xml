@@ -29,6 +29,7 @@
     <module>CommonShip</module>
     <module>CommonEnemy</module>
     <module>CommonAsteroid</module>
+      <module>CommonProjectile</module>
   </modules>
 
   <dependencyManagement>

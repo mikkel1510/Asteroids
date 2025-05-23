@@ -7,6 +7,8 @@ module Collision {
     requires CommonEnemy;
     requires CommonAsteroid;
     requires CommonSpringClient;
+    requires CommonProjectile;
+    requires CommonPlayer;
 
     provides IPostProcessor with CollisionDetector;
 }

@@ -7,12 +7,11 @@ import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.common.Services.IPostProcessor;
 import dk.sdu.cbse.commonasteroid.Asteroid;
 import dk.sdu.cbse.commonenemy.Enemy;
+import dk.sdu.cbse.commonplayer.Player;
+import dk.sdu.cbse.projectilesystem.Projectile;
 import dk.sdu.common.springclient.ISpringClient;
 
 import java.util.ServiceLoader;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 public class CollisionDetector implements IPostProcessor {
 
@@ -25,21 +24,24 @@ public class CollisionDetector implements IPostProcessor {
                 }
 
                 if (this.collides(entity1, entity2)){
-                    handleCollision(entity1, world);
-                    handleCollision(entity2, world);
+                    handleCollision(entity1, entity2, world);
+                    handleCollision(entity2, entity1, world);
                 }
             }
         }
     }
 
-    public void handleCollision(Entity entity, World world){
-        if (entity instanceof Enemy || entity instanceof Asteroid){
-            ServiceLoader.load(ISpringClient.class).findFirst().ifPresent(client -> client.post(1));
-        }
+    public void handleCollision(Entity entity, Entity hitter, World world){
         if (entity.getHealth() > 1){
             entity.setHit(true);
             entity.setHealth(entity.getHealth()-1);
         } else {
+            boolean isTarget = entity instanceof Asteroid || entity instanceof Enemy; //Is the collided entity a target?
+            boolean isPlayerProjectile = hitter instanceof Projectile projectile && projectile.getSource() instanceof Player; //Is the hitter sent by the player?
+
+            if (isTarget && isPlayerProjectile){
+                ServiceLoader.load(ISpringClient.class).findFirst().ifPresent(client -> client.post(1));
+            }
             world.removeEntity(entity);
         }
     }
