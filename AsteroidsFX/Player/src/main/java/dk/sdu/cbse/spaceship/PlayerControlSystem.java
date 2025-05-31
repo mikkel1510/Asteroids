@@ -1,4 +1,4 @@
-package dk.sdu.cbse.playersystem;
+package dk.sdu.cbse.spaceship;
 
 import dk.sdu.cbse.projectilesystem.ProjectileSPI;
 import dk.sdu.cbse.common.Data.Entity;

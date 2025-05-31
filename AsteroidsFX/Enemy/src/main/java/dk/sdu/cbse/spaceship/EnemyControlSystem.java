@@ -1,4 +1,4 @@
-package dk.sdu.cbse.enemysystem;
+package dk.sdu.cbse.spaceship;
 
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;

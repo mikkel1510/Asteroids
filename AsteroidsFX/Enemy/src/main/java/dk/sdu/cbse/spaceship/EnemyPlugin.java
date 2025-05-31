@@ -1,4 +1,4 @@
-package dk.sdu.cbse.enemysystem;
+package dk.sdu.cbse.spaceship;
 
 import java.util.Random;
 
