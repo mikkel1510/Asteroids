@@ -2,7 +2,6 @@ package main;
 
 import java.lang.module.ModuleFinder;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Set;
 
 public class PluginLoader {

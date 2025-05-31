@@ -1,5 +1,3 @@
-import dk.sdu.cbse.common.Services.IPostProcessingService;
-import dk.sdu.cbse.spaceship.DuplicateClass;
 import dk.sdu.cbse.projectilesystem.ProjectileSPI;
 import dk.sdu.cbse.common.Services.IEntityProcessingService;
 import dk.sdu.cbse.common.Services.IGamePluginService;
@@ -16,6 +14,5 @@ module Player {
     uses ProjectileSPI;
 
     provides IEntityProcessingService with PlayerControlSystem;
-    provides IPostProcessingService with DuplicateClass;
     provides IGamePluginService with PlayerPlugin;
 }

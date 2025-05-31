@@ -1,8 +1,6 @@
-import dk.sdu.cbse.common.Services.IPostProcessingService;
 import dk.sdu.cbse.projectilesystem.ProjectileSPI;
 import dk.sdu.cbse.common.Services.IEntityProcessingService;
 import dk.sdu.cbse.common.Services.IGamePluginService;
-import dk.sdu.cbse.spaceship.DuplicateClass;
 import dk.sdu.cbse.spaceship.EnemyControlSystem;
 import dk.sdu.cbse.spaceship.EnemyPlugin;
 
@@ -16,5 +14,4 @@ module Enemy {
 
     provides IGamePluginService with EnemyPlugin;
     provides IEntityProcessingService with EnemyControlSystem;
-    provides IPostProcessingService with DuplicateClass;
 }
