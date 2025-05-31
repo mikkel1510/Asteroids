@@ -3,8 +3,8 @@ package dk.sdu.cbse.enemysystem;
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
-import dk.sdu.cbse.common.Services.IEntityProcessor;
-import dk.sdu.cbse.bulletsystem.BulletSPI;
+import dk.sdu.cbse.common.Services.IEntityProcessingService;
+import dk.sdu.cbse.projectilesystem.ProjectileSPI;
 import dk.sdu.cbse.commonenemy.Enemy;
 
 import java.util.Collection;
@@ -13,8 +13,9 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class EnemyControlSystem implements IEntityProcessor {
+public class EnemyControlSystem implements IEntityProcessingService {
     private EnemyPlugin plugin = new EnemyPlugin();
+
 
     @Override
     public void process(GameData gameData, World world) {
@@ -25,7 +26,8 @@ public class EnemyControlSystem implements IEntityProcessor {
         double playerX = world.getPlayerX();
         double playerY = world.getPlayerY();
 
-        for (Entity enemy : world.getEntities(Enemy.class)) {
+        for (Entity entity : world.getEntities(Enemy.class)) {
+            Enemy enemy = (Enemy) entity;
             Random rnd = new Random();
             if (rnd.nextInt(100) % 2 == 0) {
                 enemy.setRotation(enemy.getRotation() + rnd.nextInt(10) * (rnd.nextBoolean() ? 1 : -1));
@@ -37,10 +39,12 @@ public class EnemyControlSystem implements IEntityProcessor {
             rotationDifference = ((rotationDifference + 180) % 360) - 180;
 
             if (Math.abs(rotationDifference) < 5) {
-                if (rnd.nextInt(10) == 2) {
+//                if (rnd.nextInt(10) == 2) {
+                if (System.currentTimeMillis() - enemy.getLastFired() > enemy.getFireRate()){
                     getBulletSPIs().stream().findFirst().ifPresent(
-                            spi -> world.addEntity(spi.createBullet(enemy, gameData))
+                            spi -> world.addEntity(spi.createProjectile(enemy, gameData))
                     );
+                    enemy.setLastFired(System.currentTimeMillis());
                 }
             }
 
@@ -64,7 +68,7 @@ public class EnemyControlSystem implements IEntityProcessor {
         }
     }
 
-    private Collection<? extends BulletSPI> getBulletSPIs(){
-        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    private Collection<? extends ProjectileSPI> getBulletSPIs(){
+        return ServiceLoader.load(ProjectileSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

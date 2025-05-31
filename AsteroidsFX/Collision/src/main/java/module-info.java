@@ -1,8 +1,8 @@
 import dk.sdu.cbse.collisionsystem.CollisionDetector;
-import dk.sdu.cbse.common.Services.IPostProcessor;
+import dk.sdu.cbse.common.Services.IPostProcessingService;
 
 module Collision {
-    uses dk.sdu.common.springclient.ISpringClient;
+    uses dk.sdu.common.springclient.ISpringScoreClient;
     requires Common;
     requires CommonEnemy;
     requires CommonAsteroid;
@@ -10,5 +10,5 @@ module Collision {
     requires CommonProjectile;
     requires CommonPlayer;
 
-    provides IPostProcessor with CollisionDetector;
+    provides IPostProcessingService with CollisionDetector;
 }

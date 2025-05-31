@@ -1,10 +1,10 @@
 package dk.sdu.cbse.scoringclient;
 
-import dk.sdu.common.springclient.ISpringClient;
+import dk.sdu.common.springclient.ISpringScoreClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-public class ScoringClient implements ISpringClient {
+public class ScoringClient implements ISpringScoreClient {
 
     private RestTemplate restTemplate;
     private static final String url = "http://localhost:8080";

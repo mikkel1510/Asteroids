@@ -4,13 +4,15 @@ package dk.sdu.cbse.asteroidsystem;
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
-import dk.sdu.cbse.common.Services.IEntityProcessor;
+import dk.sdu.cbse.common.Services.IEntityProcessingService;
 import dk.sdu.cbse.commonasteroid.Asteroid;
+import dk.sdu.cbse.commonasteroid.IAsteroidSplitter;
 
-public class AsteroidControlSystem implements IEntityProcessor {
+import java.util.ServiceLoader;
 
-    private AsteroidPlugin plugin = new AsteroidPlugin();
-    private AsteroidSplitter splitter = new AsteroidSplitter();
+public class AsteroidControlSystem implements IEntityProcessingService {
+
+    private final AsteroidPlugin plugin = new AsteroidPlugin();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -19,7 +21,7 @@ public class AsteroidControlSystem implements IEntityProcessor {
         }
         for (Entity asteroid : world.getEntities(Asteroid.class)){
             if (asteroid.isHit()){
-                splitter.createSplitAsteroid(asteroid, world);
+                ServiceLoader.load(IAsteroidSplitter.class).findFirst().ifPresent(splitter -> splitter.createSplitAsteroid(asteroid, world));
                 world.removeEntity(asteroid);
             }
 

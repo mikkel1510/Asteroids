@@ -26,7 +26,7 @@ public class PlayerPlugin implements IGamePluginService {
         player.setRadius(12);
         player.setHealth(10);
         player.setMaxHealth(10);
-        player.setFireRate(300);
+        player.setFireRate(250);
         return player;
     }
 

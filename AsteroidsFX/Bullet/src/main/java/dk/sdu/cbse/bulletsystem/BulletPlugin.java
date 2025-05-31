@@ -4,11 +4,12 @@ package dk.sdu.cbse.bulletsystem;
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
+import dk.sdu.cbse.projectilesystem.ProjectileSPI;
 
-public class BulletPlugin implements BulletSPI {
+public class BulletPlugin implements ProjectileSPI {
 
     @Override
-    public Entity createBullet(Entity shooter, GameData gameData) {
+    public Entity createProjectile(Entity shooter, GameData gameData) {
         Bullet bullet = new Bullet();
         bullet.setPolygonCoordinates(8, -2, 8, 2, -8, 2, -8, -2);
         double changeX = Math.cos(Math.toRadians(shooter.getRotation()));
@@ -20,14 +21,5 @@ public class BulletPlugin implements BulletSPI {
         bullet.setRadius(1);
         bullet.setSource(shooter);
         return bullet;
-    }
-
-    @Override
-    public void removeBullet(World world) {
-        for (Entity entity : world.getEntities()){
-            if (entity.getClass() == Bullet.class){
-                world.removeEntity(entity);
-            }
-        }
     }
 }

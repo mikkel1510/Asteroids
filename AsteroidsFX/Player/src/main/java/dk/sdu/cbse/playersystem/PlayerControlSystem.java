@@ -1,11 +1,11 @@
 package dk.sdu.cbse.playersystem;
 
-import dk.sdu.cbse.bulletsystem.BulletSPI;
+import dk.sdu.cbse.projectilesystem.ProjectileSPI;
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.GameKeys;
 import dk.sdu.cbse.common.Data.World;
-import dk.sdu.cbse.common.Services.IEntityProcessor;
+import dk.sdu.cbse.common.Services.IEntityProcessingService;
 import dk.sdu.cbse.commonplayer.Player;
 
 import java.util.Collection;
@@ -13,18 +13,17 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class PlayerControlSystem implements IEntityProcessor {
-    private long lastFired;
+public class PlayerControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Player.class)) {
             Player player = (Player) entity;
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
-                player.setRotation(player.getRotation() - 5);
+                player.setRotation(player.getRotation() - 3);
             }
             if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
-                player.setRotation(player.getRotation() + 5);
+                player.setRotation(player.getRotation() + 3);
             }
             if (gameData.getKeys().isDown(GameKeys.UP)) {
                 double changeX = Math.cos(Math.toRadians(player.getRotation()));
@@ -34,16 +33,16 @@ public class PlayerControlSystem implements IEntityProcessor {
                 world.setPlayerX(player.getX());
                 world.setPlayerY(player.getY());
             }
-            if (gameData.getKeys().isDown(GameKeys.SPACE) && System.currentTimeMillis() - lastFired > player.getFireRate()) {
+            if (gameData.getKeys().isDown(GameKeys.SPACE) && System.currentTimeMillis() - player.getLastFired() > player.getFireRate()) {
                 getBulletSPIs().stream().findFirst().ifPresent(
-                        spi -> world.addEntity(spi.createBullet(player, gameData))
+                        spi -> world.addEntity(spi.createProjectile(player, gameData))
                 );
-                lastFired = System.currentTimeMillis();
+                player.setLastFired(System.currentTimeMillis());;
             }
         }
     }
 
-    private Collection<? extends BulletSPI> getBulletSPIs(){
-        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    private Collection<? extends ProjectileSPI> getBulletSPIs(){
+        return ServiceLoader.load(ProjectileSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

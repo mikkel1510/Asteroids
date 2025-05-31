@@ -1,6 +1,6 @@
 package dk.sdu.cbse.commonenemy;
 
-import dk.sdu.cbse.commonship.SpaceShip;
+import dk.sdu.cbse.commonship.Spaceship;
 
-public class Enemy extends SpaceShip {
+public class Enemy extends Spaceship {
 }

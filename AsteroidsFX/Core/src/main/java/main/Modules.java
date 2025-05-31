@@ -1,9 +1,9 @@
 package main;
 
-import dk.sdu.cbse.common.Services.IEntityProcessor;
+import dk.sdu.cbse.common.Services.IEntityProcessingService;
 import dk.sdu.cbse.common.Services.IGamePluginService;
-import dk.sdu.cbse.common.Services.IPostProcessor;
-import dk.sdu.common.springclient.ISpringClient;
+import dk.sdu.cbse.common.Services.IPostProcessingService;
+import dk.sdu.common.springclient.ISpringScoreClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,9 +14,15 @@ import static java.util.stream.Collectors.toList;
 
 @Configuration
 public class Modules {
+
     @Bean
-    public List<IEntityProcessor> entityProcessorList(){
-        return ServiceLoader.load(IEntityProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    public Game game(){
+        return new Game(gamePluginServiceList(), entityProcessorList(), postProcessorList(), springScoreClient());
+    }
+
+    @Bean
+    public List<IEntityProcessingService> entityProcessorList(){
+        return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     @Bean
@@ -25,13 +31,14 @@ public class Modules {
     }
 
     @Bean
-    public List<IPostProcessor> postProcessorList(){
-        return ServiceLoader.load(IPostProcessor.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    public List<IPostProcessingService> postProcessorList(){
+        return ServiceLoader.load(IPostProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     @Bean
-    public ISpringClient springClient(){
-        return ServiceLoader.load(ISpringClient.class).findFirst().orElse(null);
+    public ISpringScoreClient springScoreClient(){
+        return ServiceLoader.load(ISpringScoreClient.class).findFirst().orElse(null);
     }
+
 
 }

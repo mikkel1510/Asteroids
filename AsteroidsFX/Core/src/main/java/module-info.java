@@ -1,7 +1,7 @@
-import dk.sdu.cbse.common.Services.IEntityProcessor;
+import dk.sdu.cbse.common.Services.IEntityProcessingService;
 import dk.sdu.cbse.common.Services.IGamePluginService;
-import dk.sdu.cbse.common.Services.IPostProcessor;
-import dk.sdu.common.springclient.ISpringClient;
+import dk.sdu.cbse.common.Services.IPostProcessingService;
+import dk.sdu.common.springclient.ISpringScoreClient;
 
 module Core {
     requires Common;
@@ -15,8 +15,8 @@ module Core {
 
     exports main;
     opens main to spring.core;
-    uses IEntityProcessor;
+    uses IEntityProcessingService;
     uses IGamePluginService;
-    uses IPostProcessor;
-    uses ISpringClient;
+    uses IPostProcessingService;
+    uses ISpringScoreClient;
 }

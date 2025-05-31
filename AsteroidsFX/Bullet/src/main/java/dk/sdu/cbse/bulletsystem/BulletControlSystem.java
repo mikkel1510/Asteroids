@@ -4,9 +4,9 @@ package dk.sdu.cbse.bulletsystem;
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
-import dk.sdu.cbse.common.Services.IEntityProcessor;
+import dk.sdu.cbse.common.Services.IEntityProcessingService;
 
-public class BulletControlSystem implements IEntityProcessor {
+public class BulletControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Bullet.class)) {

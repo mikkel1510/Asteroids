@@ -2,7 +2,7 @@ package dk.sdu.cbse.commonship;
 
 import dk.sdu.cbse.common.Data.Entity;
 
-public class SpaceShip extends Entity {
+public class Spaceship extends Entity {
     private int fireRate;
     private long lastFired;
 

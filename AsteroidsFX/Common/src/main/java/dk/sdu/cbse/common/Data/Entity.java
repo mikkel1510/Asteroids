@@ -13,9 +13,9 @@ public abstract class Entity {
     private double y;
     private double rotation;
     private float radius;
-    private int health; //TODO: Maybe move to spaceship class
+    private int health;
     private int maxHealth;
-    private boolean isHit; //Todo: Maybe not the best solution
+    private boolean isHit;
 
     public int getMaxHealth() {
         return maxHealth;

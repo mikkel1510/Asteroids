@@ -3,10 +3,11 @@ package dk.sdu.cbse.asteroidsystem;
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.World;
 import dk.sdu.cbse.commonasteroid.Asteroid;
+import dk.sdu.cbse.commonasteroid.IAsteroidSplitter;
 
 import java.util.Random;
 
-public class AsteroidSplitter implements IAsteroidSplitter{
+public class AsteroidSplitter implements IAsteroidSplitter {
 
     @Override
     public void createSplitAsteroid(Entity e, World world) {

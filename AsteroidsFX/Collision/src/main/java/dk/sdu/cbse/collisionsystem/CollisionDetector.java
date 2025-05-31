@@ -4,16 +4,16 @@ package dk.sdu.cbse.collisionsystem;
 import dk.sdu.cbse.common.Data.Entity;
 import dk.sdu.cbse.common.Data.GameData;
 import dk.sdu.cbse.common.Data.World;
-import dk.sdu.cbse.common.Services.IPostProcessor;
+import dk.sdu.cbse.common.Services.IPostProcessingService;
 import dk.sdu.cbse.commonasteroid.Asteroid;
 import dk.sdu.cbse.commonenemy.Enemy;
 import dk.sdu.cbse.commonplayer.Player;
 import dk.sdu.cbse.projectilesystem.Projectile;
-import dk.sdu.common.springclient.ISpringClient;
+import dk.sdu.common.springclient.ISpringScoreClient;
 
 import java.util.ServiceLoader;
 
-public class CollisionDetector implements IPostProcessor {
+public class CollisionDetector implements IPostProcessingService {
 
     @Override
     public void process(GameData gameData, World world){
@@ -40,7 +40,7 @@ public class CollisionDetector implements IPostProcessor {
             boolean isPlayerProjectile = hitter instanceof Projectile projectile && projectile.getSource() instanceof Player; //Is the hitter sent by the player?
 
             if (isTarget && isPlayerProjectile){
-                ServiceLoader.load(ISpringClient.class).findFirst().ifPresent(client -> client.post(1));
+                ServiceLoader.load(ISpringScoreClient.class).findFirst().ifPresent(client -> client.post(1));
             }
             world.removeEntity(entity);
         }
